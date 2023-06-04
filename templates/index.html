@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    
+
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+      <!-- use "container" to make a box , and use "container-fluid" to take all the space-->
+      <div class = "container my-3" >
+        <h2>Add a To-Do</h2>
+        
+        <form action = "/" method="POST">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp"> 
+          </div>
+            <div class="mb-3">
+              <label for="desc" class="form-label">description</label>
+              <input type="text" class="form-control" name="desc" id="desc">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>
+      <div class="container my-3" style="border:5px solid #615d5d;">  <!--this is to give margin, here we have given margin in y axis using 'my' for x axis use mx-->
+        <h2><b>My To-Do List</b> </h2>
+        <table class="table">
+        
+        <tbody>
+          <!--Using JINJA for loop To get  -->
+          {% if allTodo|length==0 %}
+
+          <div class="alert alert-dark" role="alert">
+           No record, Add your first ToDo.
+          </div>
+              {% else %}
+
+
+              <thead>
+                <tr>
+                  <th scope="col">S no.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">description</th>
+                  <th scope="col">Time</th>
+                  <th scope="col">Actions</th>
+      
+                </tr>
+              </thead>
+            
+          {% endif %}
+
+
+          {% for todo in allTodo  %}
+          <tr>
+          <th scope="row">{{loop.index}}</th>  <!--this will reload whenever the Sno.(serial number) are deleted or updated -->
+          <td>{{todo.title}}</td>
+          <td>{{todo.desc}}</td>
+          <td>{{todo.date_created}}</td>
+          <td><a href="/update/{{todo.sno}}" class="btn btn-outline-dark btn btn-sm mx-1">Update</button>
+            <a href="/delete/{{todo.sno}}" class="btn btn-outline-dark btn btn-sm mx-1">Delete</button>
+
+          </td>
+         </tr>
+          {% endfor %}
+          
+          
+        
+        </tbody>
+      </table></div>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    {% endblock body %}  
